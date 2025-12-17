@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LiteClient</title>
+    <link href="/output.css" rel="stylesheet">
+</head>
+<body class="bg-white dark:bg-brand-dark text-slate-900 dark:text-slate-100">
+
+    <nav class="flex justify-between p-4 border-b border-slate-200 dark:border-brand-border">
+        <span class="font-bold">LiteClient</span>
+        <button id="theme-toggle" class="p-2 border rounded-md dark:border-brand-border">
+            <span id="theme-icon">🌙</span>
+        </button>
+    </nav>
+
+    <main class="p-4 md:p-6 max-w-6xl mx-auto h-[calc(100vh-80px)] flex flex-col">
+        <div class="flex flex-col md:flex-row gap-2 mb-6 shrink-0">
+            <div class="relative w-full md:w-32">
+                <select id="method" class="w-full appearance-none bg-slate-50 dark:bg-brand-card border border-slate-300 dark:border-brand-border p-2 pr-8 rounded-md outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer font-bold text-blue-600 dark:text-blue-400">
+                    <option>GET</option>
+                    <option>POST</option>
+                    <option>PUT</option>
+                    <option>PATCH</option>
+                    <option>DELETE</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                    <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg>
+                </div>
+            </div>
+            <input id="url" type="text" placeholder="https://api.example.com" class="flex-1 bg-slate-50 dark:bg-brand-card border border-slate-300 dark:border-brand-border p-2 rounded-md outline-none focus:ring-2 focus:ring-blue-500">
+            <button id="send-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-bold transition-all shrink-0">Send</button>
+        </div>
+
+        <div class="flex border-b border-slate-200 dark:border-brand-border mb-4 shrink-0">
+            <button class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent" data-tab="params">Query Params</button>
+            <button class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent" data-tab="headers">Headers</button>
+            <button class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent" data-tab="json">JSON</button>
+        </div>
+
+        <div id="tab-content" class="mb-6 h-52 overflow-y-auto border border-slate-200 dark:border-brand-border rounded-md p-4 bg-slate-50/50 dark:bg-brand-card/30 shrink-0">
+            <div id="params-content" class="tab-pane">
+                <div id="params-list" class="space-y-2 mb-3"></div>
+                <button id="add-param" class="text-xs text-blue-500 font-bold uppercase hover:underline">+ Add Param</button>
+            </div>
+
+            <div id="headers-content" class="tab-pane hidden">
+                <div id="headers-list" class="space-y-2 mb-3"></div>
+                <button id="add-header" class="text-xs text-blue-500 font-bold uppercase hover:underline">+ Add Header</button>
+                
+                <datalist id="common-header-keys">
+                    <option value="Content-Type"><option value="Authorization"><option value="Accept">
+                    <option value="User-Agent"><option value="Cache-Control"><option value="Origin">
+                </datalist>
+                <datalist id="common-header-values">
+                    <option value="application/json"><option value="application/xml"><option value="Bearer <token>">
+                </datalist>
+            </div>
+
+            <div id="json-content" class="tab-pane hidden h-full relative">
+                <div class="absolute right-2 top-0 z-10">
+                    <button id="beautify-json" disabled class="disabled:opacity-30 text-[10px] bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 px-2 py-1 rounded uppercase font-bold transition-colors">Beautify</button>
+                </div>
+                <textarea id="json-input" spellcheck="false" class="w-full h-full bg-transparent border-l-4 border-transparent outline-none font-mono text-sm resize-none pr-16 pl-2 transition-all" placeholder='{ "key": "value" }'></textarea>
+            </div>
+        </div>
+
+        <div class="flex-1 flex flex-col border border-slate-200 dark:border-brand-border rounded-lg overflow-hidden min-h-0 shadow-sm">
+            <div class="bg-slate-100 dark:bg-slate-800 px-4 py-2 text-xs font-bold uppercase border-b border-slate-200 dark:border-brand-border flex justify-between">
+                <span>Response</span>
+                <div id="response-meta" class="font-mono flex gap-4"></div>
+            </div>
+            <pre id="output" class="p-4 overflow-auto flex-1 bg-white dark:bg-slate-900 font-mono text-sm text-slate-600 dark:text-slate-400">// Response will appear here...</pre>
+        </div>
+    </main>
+
+    <script src="./src/theme.js"></script>
+    <script src="./src/app.js"></script>
+</body>
+</html>
