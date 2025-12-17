@@ -10,6 +10,16 @@
 
 ---
 
+## 📸 App Screenshots
+
+| Light Mode Interface | Dark Mode Interface |
+|:---:|:---:|
+| <img width="1903" height="884" alt="image" src="https://github.com/user-attachments/assets/7c4d4f78-9f52-469e-a3d9-c5c23668da69" /> | <img width="1907" height="887" alt="image-1" src="https://github.com/user-attachments/assets/c70c5843-5140-4f6d-ae1b-fd9f4aeaf7af" /> |
+| **JSON Editor & Response** | **Query Params Management** |
+| <img width="1462" height="775" alt="image-2" src="https://github.com/user-attachments/assets/ae4a421e-ba4b-4941-a5a6-e49f54465133" /> | <img width="1409" height="699" alt="image-3" src="https://github.com/user-attachments/assets/f197ae0a-281c-4deb-87cc-c2f9b1071403" /> |
+
+---
+
 ## 🛠 How to Install
 
 Since LiteClient is currently in developer mode, follow these steps to install it in your Chrome browser:
