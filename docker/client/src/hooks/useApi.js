@@ -11,61 +11,40 @@ export const useApi = () => {
         setResponse(null);
 
         try {
-            const urlObj = new URL(url);
-            params.forEach(p => {
-                if (p.key.trim()) {
-                    urlObj.searchParams.append(p.key.trim(), p.value.trim());
-                }
+            const res = await fetch("http://localhost:9090/proxy", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    url,
+                    method,
+                    params: params.filter(p => p.key.trim() !== ""),
+                    headers: headers.filter(h => h.key.trim() !== ""),
+                    body: (method !== 'GET' && body) ? JSON.parse(body) : null
+                }),
             });
 
-            const requestHeaders = new Headers();
-            headers.forEach(h => {
-                if (h.key.trim()) {
-                    requestHeaders.append(h.key.trim(), h.value.trim());
-                }
-            });
-
-            const options = {
-                method,
-                headers: requestHeaders,
-            };
-
-            if (method !== 'GET' && body) {
-                options.body = body;
-            }
-
-            const startTime = Date.now();
-            const res = await fetch(urlObj.toString(), options);
-            const endTime = Date.now();
-
-            const contentType = res.headers.get("content-type");
-            let data;
-
-            if (contentType && contentType.includes("application/json")) {
-                data = await res.json();
-            } else {
-                data = await res.text();
-            }
-
-            setResponse({
-                status: res.status,
-                statusText: res.statusText,
-                ok: res.ok,
-                time: `${endTime - startTime}ms`,
-                data: data,
-                headers: Object.fromEntries(res.headers.entries())
-            });
+            const result = await res.json();
+            setResponse(result);
 
         } catch (err) {
             setResponse({
                 error: true,
                 message: err.message,
-                data: null
+                status: 500,
+                data: null,
+                time: 0,
+                size: 0
             });
         } finally {
             setLoading(false);
         }
     };
 
-    return { sendRequest, loading, response, setResponse };
+    const abortRequest = () => {
+        setLoading(false);
+    };
+
+    return { sendRequest, loading, response, setResponse, abortRequest };
 };
