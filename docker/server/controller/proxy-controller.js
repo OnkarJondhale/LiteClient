@@ -1,8 +1,10 @@
-
-
 const proxyController = async (req, res) => {
     try {
-        const { url, method, body, params, headers } = req.body;
+        let { url, method, body, params, headers } = req.body;
+
+        if (url) {
+            url = url.replace(/localhost|127\.0\.0\.1/g, 'host.docker.internal');
+        }
 
         const targetUrl = new URL(url);
         if (params) {
@@ -51,6 +53,7 @@ const proxyController = async (req, res) => {
             ok: false,
             status: 500,
             message: `Proxy Error: ${error.message}`,
+            cause: error.cause?.message || "Unknown Network Error",
             time: 0,
             size: 0
         });
