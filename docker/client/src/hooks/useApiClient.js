@@ -1,17 +1,20 @@
 import { useState } from 'react';
+import { URLS } from "../constants";
 
-export const useApi = () => {
+export const useApiClient = () => {
     const [loading, setLoading] = useState(false);
     const [response, setResponse] = useState(null);
 
     const sendRequest = async (config) => {
-        const { url, method, params, headers, body } = config;
+        const { url_index, url, method, params, headers, body, requestType } = config;
+        
+        console.log(config);
 
         setLoading(true);
         setResponse(null);
 
         try {
-            const res = await fetch("http://localhost:9090/proxy", {
+            const res = await fetch(URLS[url_index], {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -21,7 +24,8 @@ export const useApi = () => {
                     method,
                     params: params.filter(p => p.key.trim() !== ""),
                     headers: headers.filter(h => h.key.trim() !== ""),
-                    body: (method !== 'GET' && body) ? JSON.parse(body) : null
+                    body: (method !== 'GET' && body) ? JSON.parse(body) : null,
+                    requestType: requestType,
                 }),
             });
 

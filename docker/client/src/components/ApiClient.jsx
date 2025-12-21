@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import JsonEditor from "./JsonEditor";
-import { useApi } from "../hooks/useApi";
+import { useApiClient } from "../hooks/useApiClient";
 import { METHODS, COMMON_HEADERS, COMMON_VALUES, methodStyles } from "../constants";
 
 export default function ApiClient({ initialData, onUpdate }) {
-    const { sendRequest, loading, response, abortRequest } = useApi();
+    const { sendRequest, loading, response, abortRequest } = useApiClient();
 
     const [method, setMethod] = useState(initialData.method || "GET");
     const [activeTab, setActiveTab] = useState(initialData.activeTab || "Params");
@@ -35,7 +35,7 @@ export default function ApiClient({ initialData, onUpdate }) {
     const handleSend = () => {
         if (loading) { abortRequest(); return; }
         if (!url.trim()) return;
-        sendRequest({ url, method, params, headers, body: method !== "GET" ? jsonBody : null });
+        sendRequest({ url_index:0, url, method, params, headers, body: method !== "GET" ? jsonBody : null, requestType: 'proxy' });
     };
 
     const highlight = (text) => {

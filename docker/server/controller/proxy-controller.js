@@ -2,9 +2,10 @@ const proxyController = async (req, res) => {
     try {
         let { url, method, body, params, headers } = req.body;
 
-        if (url) {
-            url = url.replace(/localhost|127\.0\.0\.1/g, 'host.docker.internal');
-        }
+        // Uncomment this in production environment
+        // if (url) {
+        //     url = url.replace(/localhost|127\.0\.0\.1/g, 'host.docker.internal');
+        // }
 
         const targetUrl = new URL(url);
         if (params) {
@@ -12,6 +13,8 @@ const proxyController = async (req, res) => {
                 if (p.key) targetUrl.searchParams.append(p.key, p.value);
             });
         }
+
+        console.log(targetUrl)
 
         const startTime = performance.now();
 

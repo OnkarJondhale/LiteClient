@@ -13,7 +13,7 @@ export const useMockStore = create(
           headers: [{ key: "Content-Type", value: "application/json" }],
           params: [{ key: "", value: "" }],
           body: '',
-          isActive: true
+          isActive: false
         }
       ],
       activeMockId: 1,
@@ -30,7 +30,7 @@ export const useMockStore = create(
           headers: [{ key: "", value: "" }],
           params: [{ key: "", value: "" }],
           body: '',
-          isActive: true
+          isActive: false
         };
         set((state) => ({ 
           mocks: [...state.mocks, newMock],
