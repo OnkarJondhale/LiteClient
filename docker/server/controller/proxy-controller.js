@@ -14,8 +14,6 @@ const proxyController = async (req, res) => {
             });
         }
 
-        console.log(targetUrl)
-
         const startTime = performance.now();
 
         const response = await fetch(targetUrl.href, {

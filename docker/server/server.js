@@ -10,7 +10,7 @@ const { interceptorRouter } = require('./route/interceptor-router');
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/system", (req, res) => {
     return res.status(200).json({
         success: true,
         ok: true,

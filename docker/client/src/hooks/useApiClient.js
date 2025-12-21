@@ -7,8 +7,6 @@ export const useApiClient = () => {
 
     const sendRequest = async (config) => {
         const { url_index, url, method, params, headers, body, requestType } = config;
-        
-        console.log(config);
 
         setLoading(true);
         setResponse(null);
