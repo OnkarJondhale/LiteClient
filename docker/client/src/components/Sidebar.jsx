@@ -60,7 +60,7 @@ function Sidebar() {
 
             <div className="p-4 border-t border-[#e4e4e7] dark:border-[#27272a] overflow-hidden whitespace-nowrap">
                 <div className={`text-[10px] text-[#71717a] dark:text-[#a1a1aa] font-bold tracking-widest uppercase transition-opacity duration-300 ${isSidebar ? 'opacity-100' : 'opacity-0'}`}>
-                    LiteClient v1.0
+                    LiteClient v2.0
                 </div>
             </div>
         </aside>
