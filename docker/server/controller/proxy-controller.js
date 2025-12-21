@@ -3,9 +3,9 @@ const proxyController = async (req, res) => {
         let { url, method, body, params, headers } = req.body;
 
         // Uncomment this in production environment
-        // if (url) {
-        //     url = url.replace(/localhost|127\.0\.0\.1/g, 'host.docker.internal');
-        // }
+        if (url) {
+            url = url.replace(/localhost|127\.0\.0\.1/g, 'host.docker.internal');
+        }
 
         const targetUrl = new URL(url);
         if (params) {

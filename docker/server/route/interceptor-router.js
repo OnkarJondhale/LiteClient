@@ -5,11 +5,25 @@ const { getMockRegistry } = require('../controller/apimock-controller');
 interceptorRouter.all(/.*/, (req, res, next) => {
     const registry = getMockRegistry();
     
-    const match = registry.find(m => 
-        m.isActive && 
-        m.method === req.method && 
-        (m.path === req.path || m.path === `/${req.path}`)
-    );
+    const match = registry.find(m => {
+        const pathMatch = (m.path === req.path || m.path === `/${req.path}`);
+        const methodMatch = m.method === req.method;
+        
+        if (m.isActive && pathMatch && methodMatch) {
+            if (m.headers && m.headers.length > 0) {
+                for (const h of m.headers) {
+                    if (h.key && h.value) {
+                        const incomingHeader = req.get(h.key);
+                        if (incomingHeader !== h.value) {
+                            return false; 
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    });
 
     if (match) {
         if (match.headers) {
@@ -25,6 +39,7 @@ interceptorRouter.all(/.*/, (req, res, next) => {
             return res.status(Number(match.status)).send(match.body);
         }
     }
+
     next();
 });
 
